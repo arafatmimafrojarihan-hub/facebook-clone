@@ -1,0 +1,1131 @@
+import React, { useState } from 'react';
+import {
+  Search,
+  Home,
+  Users,
+  Tv,
+  Store,
+  Grid,
+  MessageCircle,
+  Bell,
+  Bookmark,
+  Clock,
+  ChevronDown,
+  Video,
+  Image,
+  Smile,
+  ThumbsUp,
+  MessageSquare,
+  Share2,
+  Globe,
+  MoreHorizontal,
+  Plus,
+  LogOut,
+  X,
+  Send,
+  Play,
+  Flame,
+  Gamepad2,
+  Music,
+  Newspaper,
+  Compass
+} from 'lucide-react';
+
+export default function App() {
+  // Navigation & Authentication state
+  const [currentView, setCurrentView] = useState('login'); // 'login' | 'feed'
+  const [user, setUser] = useState(null);
+
+  // Login form state
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // Dropdown menu state
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+
+  // Post Creation state
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [newPostText, setNewPostText] = useState('');
+  const [newPostImage, setNewPostImage] = useState('');
+
+  // Active Tab state ('home' | 'friends' | 'watch' | 'store')
+  const [activeTab, setActiveTab] = useState('home');
+
+  // Video Section category state
+  const [videoCategory, setVideoCategory] = useState('all');
+
+  // Search filter
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // New Comment Input per post state map
+  const [commentInputs, setCommentInputs] = useState({});
+
+  // Stories State
+  const [stories, setStories] = useState([
+    {
+      id: 1,
+      name: 'Sarah Jenkins',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150',
+      image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=300'
+    },
+    {
+      id: 2,
+      name: 'Michael Brown',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150',
+      image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=300'
+    },
+    {
+      id: 3,
+      name: 'Emily Davis',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150',
+      image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80&w=300'
+    }
+  ]);
+
+  // Feed Posts state
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      author: 'Alex Morgan',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150',
+      time: '2 hrs ago',
+      content: 'Building a full-stack social media clone web app! What do you guys think? 🚀💻 Feel free to post your thoughts below.',
+      image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800',
+      likes: 124,
+      isLiked: false,
+      comments: [
+        { id: 101, author: 'Sophia Wilson', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150', text: 'Looks amazing! Great job on the UI layout.' },
+        { id: 102, author: 'David Miller', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150', text: 'Tailwind CSS is super crisp here 👌' }
+      ]
+    },
+    {
+      id: 2,
+      author: 'Jessica Taylor',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150',
+      time: '5 hrs ago',
+      content: 'Just finished a weekend trip to the mountains! Fresh air and zero notifications (well, almost) 🏔️🌲✨',
+      image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800',
+      likes: 89,
+      isLiked: true,
+      comments: [
+        { id: 103, author: 'Alex Morgan', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150', text: 'Stunning view! Which trail was this?' }
+      ]
+    }
+  ]);
+
+  // Video Section Videos State
+  const [videos, setVideos] = useState([
+    {
+      id: 1,
+      creator: 'React Official',
+      avatar: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=150',
+      time: '1 day ago',
+      category: 'tech',
+      title: 'React 19 In 100 Seconds',
+      description: 'Check out the official breakdown of React 19 features including Actions, useActionState, and server components!',
+      embedUrl: 'https://www.youtube.com/embed/SqcY0GlETPk',
+      views: '245K views',
+      likes: 1820,
+      isLiked: false,
+      comments: [
+        { id: 201, author: 'Tech Enthusiast', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150', text: 'React 19 is going to save so much boilerplate code!' }
+      ]
+    },
+    {
+      id: 2,
+      creator: 'Nature & Wildlife HD',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150',
+      time: '3 days ago',
+      category: 'live',
+      title: 'Relaxing Ocean & Nature 4K Cinematic Drone Footage',
+      description: 'Take a break and enjoy calming 4K coastal scenery accompanied by natural soundscapes.',
+      embedUrl: 'https://www.youtube.com/embed/BHACKCNDMW8',
+      views: '1.2M views',
+      likes: 5400,
+      isLiked: true,
+      comments: [
+        { id: 202, author: 'Sarah Jenkins', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150', text: 'So soothing! Playing this while coding.' }
+      ]
+    },
+    {
+      id: 3,
+      creator: 'Fireship Tech',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150',
+      time: '4 days ago',
+      category: 'gaming',
+      title: '10 Web Dev Trends You Need to Know',
+      description: 'A quick overview of modern full-stack web architectures, AI integrations, and framework updates.',
+      embedUrl: 'https://www.youtube.com/embed/erEgovG9W38',
+      views: '510K views',
+      likes: 3890,
+      isLiked: false,
+      comments: []
+    }
+  ]);
+
+  // Online Contacts List
+  const contacts = [
+    { id: 1, name: 'Sarah Jenkins', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150', online: true },
+    { id: 2, name: 'Michael Brown', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150', online: true },
+    { id: 3, name: 'Emily Davis', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150', online: true },
+    { id: 4, name: 'David Miller', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150', online: false },
+    { id: 5, name: 'Sophia Wilson', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=150', online: true }
+  ];
+
+  // Handle Login Submission
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (!email) return;
+    const userName = email.split('@')[0] || 'John Doe';
+    const formattedName = userName.charAt(0).toUpperCase() + userName.slice(1);
+    
+    setUser({
+      name: formattedName,
+      email: email,
+      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'
+    });
+    setCurrentView('feed');
+  };
+
+  // Handle Logout
+  const handleLogout = () => {
+    setUser(null);
+    setCurrentView('login');
+    setIsProfileMenuOpen(false);
+    setEmail('');
+    setPassword('');
+  };
+
+  // Handle Create Post
+  const handleCreatePost = (e) => {
+    e.preventDefault();
+    if (!newPostText.trim() && !newPostImage.trim()) return;
+
+    const newPost = {
+      id: Date.now(),
+      author: user ? user.name : 'John Doe',
+      avatar: user ? user.avatar : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150',
+      time: 'Just now',
+      content: newPostText,
+      image: newPostImage.trim() || null,
+      likes: 0,
+      isLiked: false,
+      comments: []
+    };
+
+    setPosts([newPost, ...posts]);
+    setNewPostText('');
+    setNewPostImage('');
+    setIsPostModalOpen(false);
+  };
+
+  // Handle Like Toggle for Feed Posts
+  const handleToggleLike = (postId) => {
+    setPosts(posts.map(post => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          isLiked: !post.isLiked,
+          likes: post.isLiked ? post.likes - 1 : post.likes + 1
+        };
+      }
+      return post;
+    }));
+  };
+
+  // Handle Like Toggle for Videos
+  const handleToggleVideoLike = (videoId) => {
+    setVideos(videos.map(video => {
+      if (video.id === videoId) {
+        return {
+          ...video,
+          isLiked: !video.isLiked,
+          likes: video.isLiked ? video.likes - 1 : video.likes + 1
+        };
+      }
+      return video;
+    }));
+  };
+
+  // Handle Comment Submission for Feed Posts
+  const handleAddComment = (postId) => {
+    const text = commentInputs[postId];
+    if (!text || !text.trim()) return;
+
+    const newComment = {
+      id: Date.now(),
+      author: user ? user.name : 'John Doe',
+      avatar: user ? user.avatar : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150',
+      text: text.trim()
+    };
+
+    setPosts(posts.map(post => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          comments: [...post.comments, newComment]
+        };
+      }
+      return post;
+    }));
+
+    setCommentInputs({ ...commentInputs, [postId]: '' });
+  };
+
+  // Handle Comment Submission for Video Posts
+  const handleAddVideoComment = (videoId) => {
+    const text = commentInputs[`video-${videoId}`];
+    if (!text || !text.trim()) return;
+
+    const newComment = {
+      id: Date.now(),
+      author: user ? user.name : 'John Doe',
+      avatar: user ? user.avatar : 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150',
+      text: text.trim()
+    };
+
+    setVideos(videos.map(video => {
+      if (video.id === videoId) {
+        return {
+          ...video,
+          comments: [...video.comments, newComment]
+        };
+      }
+      return video;
+    }));
+
+    setCommentInputs({ ...commentInputs, [`video-${videoId}`]: '' });
+  };
+
+  // Filtered posts based on search query
+  const filteredPosts = posts.filter(post => 
+    post.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    post.author.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Filtered videos based on search query & category
+  const filteredVideos = videos.filter(video => {
+    const matchesSearch = video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          video.creator.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = videoCategory === 'all' || video.category === videoCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  // ---------------------------------------------------------------------------
+  // VIEW 1: LANDING / LOGIN PAGE
+  // ---------------------------------------------------------------------------
+  if (currentView === 'login') {
+    return (
+      <div className="bg-slate-100 font-sans text-slate-900 min-h-screen flex flex-col justify-between">
+        {/* Main Content Area */}
+        <main className="flex-1 flex items-center justify-center px-4 py-8 lg:py-20">
+          <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            
+            {/* Left Column: Branding */}
+            <div className="text-center lg:text-left space-y-3 lg:pr-6">
+              <h1 className="text-blue-600 font-bold text-5xl lg:text-6xl tracking-tight">facebook</h1>
+              <p className="text-2xl lg:text-3xl text-slate-700 font-normal leading-snug">
+                Facebook helps you connect and share with the people in your life.
+              </p>
+            </div>
+
+            {/* Right Column: Login Card */}
+            <div className="flex flex-col items-center">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg border border-slate-200 w-full max-w-[396px] space-y-4">
+                <form onSubmit={handleLogin} className="space-y-3">
+                  <div>
+                    <input
+                      type="text"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Email address or phone number"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Password"
+                      className="w-full px-4 py-3 border border-slate-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                      required
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg text-xl transition duration-150 active:scale-[0.99]"
+                  >
+                    Log In
+                  </button>
+                </form>
+
+                <div className="text-center pt-1">
+                  <a href="#forgot" onClick={(e) => e.preventDefault()} className="text-blue-600 hover:underline text-sm font-medium">
+                    Forgotten password?
+                  </a>
+                </div>
+
+                <hr className="border-slate-200 my-2" />
+
+                <div className="text-center pt-2 pb-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEmail('demo.user@facebook.com');
+                      setPassword('password123');
+                    }}
+                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-4 py-3 rounded-lg text-base transition duration-150 active:scale-[0.99]"
+                  >
+                    Create new account
+                  </button>
+                </div>
+              </div>
+
+              <p className="text-sm text-slate-600 mt-7 text-center">
+                <a href="#page" onClick={(e) => e.preventDefault()} className="font-bold hover:underline text-slate-800">Create a Page</a> for a celebrity, brand or business.
+              </p>
+            </div>
+
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="bg-white border-t border-slate-200 py-8 px-4 text-xs text-slate-500 shrink-0">
+          <div className="max-w-5xl mx-auto space-y-3">
+            <div className="flex flex-wrap gap-x-3 gap-y-1 text-slate-600">
+              <span className="text-slate-400">English (UK)</span>
+              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">বাংলা</a>
+              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">অসমীয়া</a>
+              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">हिन्दी</a>
+              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">Nepali</a>
+              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">Bahasa Indonesia</a>
+              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">العربية</a>
+              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">Español</a>
+              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">Português (Brasil)</a>
+            </div>
+
+            <hr className="border-slate-200" />
+
+            <div className="flex flex-wrap gap-x-4 gap-y-1">
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Sign Up</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Log In</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Messenger</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Facebook Lite</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Watch</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Places</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Games</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Marketplace</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Meta Pay</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Meta Store</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Meta Quest</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Instagram</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Fundraisers</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Services</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Privacy Policy</a>
+              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Terms</a>
+            </div>
+
+            <div className="pt-2">
+              <span>Meta © 2026</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // VIEW 2: MAIN APPLICATION FEED & WATCH SECTION
+  // ---------------------------------------------------------------------------
+  return (
+    <div className="bg-slate-100 font-sans text-slate-900 antialiased h-screen flex flex-col overflow-hidden">
+      
+      {/* TOP NAVIGATION BAR */}
+      <header className="bg-white border-b border-slate-200 h-14 px-4 flex items-center justify-between shadow-sm shrink-0 z-40">
+        {/* Left: Logo & Search */}
+        <div className="flex items-center space-x-2">
+          <div 
+            onClick={() => setActiveTab('home')}
+            className="bg-blue-600 text-white font-extrabold text-2xl w-10 h-10 rounded-full flex items-center justify-center cursor-pointer select-none"
+          >
+            f
+          </div>
+          <div className="relative hidden sm:block">
+            <Search className="absolute left-3 top-2.5 text-slate-400 w-4 h-4" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={activeTab === 'watch' ? "Search videos..." : "Search Facebook..."}
+              className="bg-slate-100 pl-9 pr-4 py-2 rounded-full text-sm outline-none w-48 md:w-60 focus:ring-2 focus:ring-blue-500 transition"
+            />
+          </div>
+        </div>
+
+        {/* Center: Main Nav Tabs */}
+        <div className="flex items-center space-x-1 md:space-x-2 h-full">
+          <button 
+            onClick={() => setActiveTab('home')}
+            className={`h-full px-4 md:px-7 flex items-center border-b-4 transition ${
+              activeTab === 'home' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:bg-slate-100'
+            }`}
+            title="Home"
+          >
+            <Home className="w-6 h-6" />
+          </button>
+          <button 
+            onClick={() => setActiveTab('friends')}
+            className={`h-full px-4 md:px-7 flex items-center border-b-4 transition ${
+              activeTab === 'friends' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:bg-slate-100'
+            }`}
+            title="Friends"
+          >
+            <Users className="w-6 h-6" />
+          </button>
+          <button 
+            onClick={() => setActiveTab('watch')}
+            className={`h-full px-4 md:px-7 items-center border-b-4 transition flex ${
+              activeTab === 'watch' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:bg-slate-100'
+            }`}
+            title="Watch / Videos"
+          >
+            <Tv className="w-6 h-6" />
+          </button>
+          <button 
+            onClick={() => setActiveTab('store')}
+            className={`h-full px-4 md:px-7 items-center border-b-4 transition hidden md:flex ${
+              activeTab === 'store' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:bg-slate-100'
+            }`}
+            title="Marketplace"
+          >
+            <Store className="w-6 h-6" />
+          </button>
+        </div>
+
+        {/* Right: Profile & Actions */}
+        <div className="flex items-center space-x-2 relative">
+          <button className="bg-slate-200 hover:bg-slate-300 p-2.5 rounded-full transition hidden sm:flex">
+            <Grid className="w-5 h-5 text-slate-700" />
+          </button>
+          <button className="bg-slate-200 hover:bg-slate-300 p-2.5 rounded-full transition relative">
+            <MessageCircle className="w-5 h-5 text-slate-700" />
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">3</span>
+          </button>
+          <button className="bg-slate-200 hover:bg-slate-300 p-2.5 rounded-full transition relative">
+            <Bell className="w-5 h-5 text-slate-700" />
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">5</span>
+          </button>
+
+          {/* User Profile Avatar with Menu Toggle */}
+          <div className="relative">
+            <img
+              src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
+              alt="Profile"
+              onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+              className="w-10 h-10 rounded-full cursor-pointer object-cover border border-slate-300 hover:opacity-90 transition"
+            />
+
+            {/* Profile Dropdown Menu */}
+            {isProfileMenuOpen && (
+              <div className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-slate-200 p-2 space-y-1 z-50">
+                <div className="flex items-center space-x-3 p-2 hover:bg-slate-100 rounded-lg cursor-pointer">
+                  <img
+                    src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
+                    className="w-10 h-10 rounded-full object-cover"
+                    alt="User"
+                  />
+                  <div>
+                    <h4 className="font-semibold text-sm">{user?.name || 'John Doe'}</h4>
+                    <p className="text-xs text-slate-500">See your profile</p>
+                  </div>
+                </div>
+
+                <hr className="border-slate-100 my-1" />
+
+                <button 
+                  onClick={handleLogout}
+                  className="w-full flex items-center space-x-3 p-2 hover:bg-red-50 text-red-600 rounded-lg transition text-left"
+                >
+                  <div className="bg-red-100 p-2 rounded-full">
+                    <LogOut className="w-5 h-5" />
+                  </div>
+                  <span className="font-medium text-sm">Log Out</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* MAIN CONTAINER (3-Column Layout) */}
+      <div className="flex flex-1 overflow-hidden">
+
+        {/* LEFT SIDEBAR */}
+        <aside className="w-64 xl:w-72 p-3 overflow-y-auto hidden lg:block space-y-1 shrink-0">
+          <a href="#profile" onClick={(e) => { e.preventDefault(); setActiveTab('home'); }} className="flex items-center space-x-3 p-2 hover:bg-slate-200 rounded-lg transition">
+            <img
+              src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
+              className="w-9 h-9 rounded-full object-cover"
+              alt="User"
+            />
+            <span className="font-semibold text-sm">{user?.name || 'John Doe'}</span>
+          </a>
+
+          <a href="#friends" onClick={(e) => { e.preventDefault(); setActiveTab('friends'); }} className={`flex items-center space-x-3 p-2 rounded-lg transition ${activeTab === 'friends' ? 'bg-slate-200 text-blue-600 font-semibold' : 'hover:bg-slate-200 text-slate-700'}`}>
+            <Users className="text-blue-500 w-6 h-6" />
+            <span className="font-medium text-sm">Friends</span>
+          </a>
+
+          <a href="#video" onClick={(e) => { e.preventDefault(); setActiveTab('watch'); }} className={`flex items-center space-x-3 p-2 rounded-lg transition ${activeTab === 'watch' ? 'bg-slate-200 text-blue-600 font-semibold' : 'hover:bg-slate-200 text-slate-700'}`}>
+            <Tv className="text-emerald-500 w-6 h-6" />
+            <span className="font-medium text-sm">Video / Watch</span>
+          </a>
+
+          <a href="#memories" onClick={(e) => e.preventDefault()} className="flex items-center space-x-3 p-2 hover:bg-slate-200 rounded-lg transition text-slate-700">
+            <Clock className="text-blue-500 w-6 h-6" />
+            <span className="font-medium text-sm">Memories</span>
+          </a>
+
+          <a href="#saved" onClick={(e) => e.preventDefault()} className="flex items-center space-x-3 p-2 hover:bg-slate-200 rounded-lg transition text-slate-700">
+            <Bookmark className="text-purple-500 w-6 h-6" />
+            <span className="font-medium text-sm">Saved</span>
+          </a>
+
+          <a href="#groups" onClick={(e) => e.preventDefault()} className="flex items-center space-x-3 p-2 hover:bg-slate-200 rounded-lg transition text-slate-700">
+            <Users className="text-blue-600 w-6 h-6" />
+            <span className="font-medium text-sm">Groups</span>
+          </a>
+
+          <hr className="border-slate-200 my-2" />
+
+          <h3 className="px-2 text-xs font-semibold text-slate-500">Your Shortcuts</h3>
+          
+          <a href="#shortcut1" onClick={(e) => e.preventDefault()} className="flex items-center space-x-3 p-2 hover:bg-slate-200 rounded-lg transition text-slate-700">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-400 to-red-500 flex items-center justify-center text-white font-bold text-xs">
+              DEV
+            </div>
+            <span className="font-medium text-sm">React Developers Group</span>
+          </a>
+        </aside>
+
+        {/* CENTER FEED & VIDEO SECTION */}
+        <main className="flex-1 overflow-y-auto p-4 flex flex-col items-center">
+          
+          {/* CONDITION 1: WATCH / VIDEO TAB VIEW */}
+          {activeTab === 'watch' ? (
+            <div className="w-full max-w-[680px] space-y-4">
+              
+              {/* Watch Header Banner & Categories */}
+              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-3">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center space-x-2">
+                    <Tv className="w-7 h-7 text-emerald-500" />
+                    <h2 className="text-xl font-bold text-slate-800">Video Watch Feed</h2>
+                  </div>
+                  <span className="text-xs bg-emerald-100 text-emerald-700 font-semibold px-2.5 py-1 rounded-full flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Live Streaming & Clips
+                  </span>
+                </div>
+
+                {/* Category Pills */}
+                <div className="flex items-center space-x-2 overflow-x-auto pb-1 text-xs">
+                  <button 
+                    onClick={() => setVideoCategory('all')}
+                    className={`px-3 py-1.5 rounded-full font-medium transition shrink-0 ${videoCategory === 'all' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+                  >
+                    Home / All
+                  </button>
+                  <button 
+                    onClick={() => setVideoCategory('live')}
+                    className={`px-3 py-1.5 rounded-full font-medium transition flex items-center space-x-1 shrink-0 ${videoCategory === 'live' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+                  >
+                    <Flame className="w-3.5 h-3.5 text-red-500" />
+                    <span>Live</span>
+                  </button>
+                  <button 
+                    onClick={() => setVideoCategory('gaming')}
+                    className={`px-3 py-1.5 rounded-full font-medium transition flex items-center space-x-1 shrink-0 ${videoCategory === 'gaming' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+                  >
+                    <Gamepad2 className="w-3.5 h-3.5 text-purple-500" />
+                    <span>Gaming</span>
+                  </button>
+                  <button 
+                    onClick={() => setVideoCategory('tech')}
+                    className={`px-3 py-1.5 rounded-full font-medium transition flex items-center space-x-1 shrink-0 ${videoCategory === 'tech' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+                  >
+                    <Compass className="w-3.5 h-3.5 text-blue-500" />
+                    <span>Tech & Dev</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* VIDEO CARDS LIST */}
+              {filteredVideos.length === 0 ? (
+                <div className="bg-white rounded-xl shadow-sm p-8 text-center text-slate-500 border border-slate-200">
+                  No videos found matching your filter.
+                </div>
+              ) : (
+                filteredVideos.map(video => (
+                  <div key={video.id} className="bg-white rounded-xl shadow-sm border border-slate-200 space-y-3 p-4">
+                    
+                    {/* Video Creator Header */}
+                    <div className="flex justify-between items-center">
+                      <div className="flex space-x-3 items-center">
+                        <img src={video.avatar} className="w-10 h-10 rounded-full object-cover" alt={video.creator} />
+                        <div>
+                          <h4 className="font-semibold text-sm hover:underline cursor-pointer flex items-center space-x-1">
+                            <span>{video.creator}</span>
+                            <span className="text-blue-500 text-xs">✓</span>
+                          </h4>
+                          <p className="text-xs text-slate-500 flex items-center space-x-1">
+                            <span>{video.time}</span>
+                            <span>•</span>
+                            <span>{video.views}</span>
+                            <span>•</span>
+                            <Globe className="w-3 h-3" />
+                          </p>
+                        </div>
+                      </div>
+                      <button className="text-slate-500 hover:bg-slate-100 p-2 rounded-full transition">
+                        <MoreHorizontal className="w-5 h-5" />
+                      </button>
+                    </div>
+
+                    {/* Video Description & Title */}
+                    <div>
+                      <h3 className="font-bold text-base text-slate-900 mb-1">{video.title}</h3>
+                      <p className="text-sm text-slate-700 leading-relaxed">{video.description}</p>
+                    </div>
+
+                    {/* Embedded Youtube Player */}
+                    <div className="relative rounded-xl overflow-hidden aspect-video bg-black -mx-4 sm:mx-0 shadow-inner">
+                      <iframe
+                        className="w-full h-full border-0"
+                        src={video.embedUrl}
+                        title={video.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+
+                    {/* Video Stats */}
+                    <div className="flex justify-between text-xs text-slate-500 pt-1">
+                      <div className="flex items-center space-x-1.5">
+                        <span className="bg-blue-600 text-white rounded-full p-1">
+                          <ThumbsUp className="w-3 h-3" />
+                        </span>
+                        <span>{video.likes} Reactions</span>
+                      </div>
+                      <div className="space-x-2">
+                        <span>{video.comments.length} Comments</span>
+                      </div>
+                    </div>
+
+                    <hr className="border-slate-100" />
+
+                    {/* Video Interactive Actions */}
+                    <div className="flex justify-between">
+                      <button
+                        onClick={() => handleToggleVideoLike(video.id)}
+                        className={`flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg font-medium text-sm transition ${
+                          video.isLiked ? 'text-blue-600' : 'text-slate-600'
+                        }`}
+                      >
+                        <ThumbsUp className={`w-5 h-5 ${video.isLiked ? 'fill-blue-600' : ''}`} />
+                        <span>Like</span>
+                      </button>
+                      <button className="flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg text-slate-600 font-medium text-sm transition">
+                        <MessageSquare className="w-5 h-5" />
+                        <span>Comment</span>
+                      </button>
+                      <button className="flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg text-slate-600 font-medium text-sm transition">
+                        <Share2 className="w-5 h-5" />
+                        <span>Share</span>
+                      </button>
+                    </div>
+
+                    <hr className="border-slate-100" />
+
+                    {/* Video Comments */}
+                    {video.comments.length > 0 && (
+                      <div className="space-y-2 pt-1">
+                        {video.comments.map(comment => (
+                          <div key={comment.id} className="flex space-x-2 items-start">
+                            <img src={comment.avatar} className="w-8 h-8 rounded-full object-cover" alt={comment.author} />
+                            <div className="bg-slate-100 px-3 py-2 rounded-2xl max-w-[85%] text-xs">
+                              <span className="font-semibold block text-slate-900">{comment.author}</span>
+                              <span className="text-slate-700">{comment.text}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Video Comment Input Box */}
+                    <div className="flex space-x-2 items-center pt-2">
+                      <img
+                        src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
+                        className="w-8 h-8 rounded-full object-cover"
+                        alt="User avatar"
+                      />
+                      <div className="flex-1 flex bg-slate-100 rounded-full px-3 py-1.5 items-center">
+                        <input
+                          type="text"
+                          placeholder="Write a comment on this video..."
+                          value={commentInputs[`video-${video.id}`] || ''}
+                          onChange={(e) => setCommentInputs({ ...commentInputs, [`video-${video.id}`]: e.target.value })}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') handleAddVideoComment(video.id);
+                          }}
+                          className="bg-transparent text-xs w-full outline-none"
+                        />
+                        <button 
+                          onClick={() => handleAddVideoComment(video.id)}
+                          className="text-blue-600 hover:text-blue-700 p-1"
+                        >
+                          <Send className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                ))
+              )}
+
+            </div>
+          ) : (
+            /* CONDITION 2: STANDARD MAIN HOME FEED VIEW */
+            <div className="w-full max-w-[590px] space-y-4">
+
+              {/* STORIES BAR */}
+              <div className="flex space-x-2 overflow-x-auto pb-2 scrollbar-none w-full">
+                {/* Create Story Card */}
+                <div 
+                  onClick={() => setIsPostModalOpen(true)}
+                  className="w-28 h-48 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden shrink-0 relative flex flex-col cursor-pointer group"
+                >
+                  <img
+                    src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
+                    className="h-32 object-cover group-hover:scale-105 transition duration-200"
+                    alt="Story background"
+                  />
+                  <div className="bg-blue-600 text-white rounded-full p-1.5 border-2 border-white absolute bottom-10 left-1/2 -translate-x-1/2">
+                    <Plus className="w-4 h-4" />
+                  </div>
+                  <div className="mt-auto pb-2 text-center text-xs font-semibold text-slate-800">Create Story</div>
+                </div>
+
+                {/* User Story Cards */}
+                {stories.map(story => (
+                  <div 
+                    key={story.id} 
+                    className="w-28 h-48 rounded-xl shadow-sm overflow-hidden shrink-0 relative cursor-pointer group border border-slate-200"
+                  >
+                    <img
+                      src={story.image}
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-200"
+                      alt={story.name}
+                    />
+                    <div className="absolute inset-0 bg-black/20"></div>
+                    <img
+                      src={story.avatar}
+                      className="w-9 h-9 rounded-full border-2 border-blue-600 absolute top-2 left-2 object-cover"
+                      alt={story.name}
+                    />
+                    <span className="absolute bottom-2 left-2 text-white font-medium text-xs shadow-sm">
+                      {story.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* CREATE POST BOX */}
+              <div className="bg-white rounded-xl shadow-sm p-4 border border-slate-200 space-y-3">
+                <div className="flex space-x-3 items-center">
+                  <img
+                    src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
+                    className="w-10 h-10 rounded-full object-cover"
+                    alt="Avatar"
+                  />
+                  <input
+                    type="text"
+                    onClick={() => setIsPostModalOpen(true)}
+                    readOnly
+                    placeholder={`What's on your mind, ${user ? user.name : 'John'}?`}
+                    className="bg-slate-100 hover:bg-slate-200 transition rounded-full px-4 py-2.5 text-sm w-full outline-none cursor-pointer"
+                  />
+                </div>
+
+                <hr className="border-slate-100" />
+
+                <div className="flex justify-between pt-1">
+                  <button 
+                    onClick={() => setActiveTab('watch')}
+                    className="flex items-center space-x-2 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-sm font-medium transition flex-1 justify-center"
+                  >
+                    <Video className="text-red-500 w-5 h-5" />
+                    <span className="hidden sm:inline">Watch Videos</span>
+                  </button>
+                  <button 
+                    onClick={() => setIsPostModalOpen(true)}
+                    className="flex items-center space-x-2 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-sm font-medium transition flex-1 justify-center"
+                  >
+                    <Image className="text-green-500 w-5 h-5" />
+                    <span>Photo/Video</span>
+                  </button>
+                  <button 
+                    onClick={() => setIsPostModalOpen(true)}
+                    className="flex items-center space-x-2 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-sm font-medium transition flex-1 justify-center"
+                  >
+                    <Smile className="text-yellow-500 w-5 h-5" />
+                    <span className="hidden sm:inline">Feeling/Activity</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* POSTS LIST */}
+              {filteredPosts.length === 0 ? (
+                <div className="bg-white rounded-xl shadow-sm p-8 text-center text-slate-500 border border-slate-200">
+                  No posts found matching your search.
+                </div>
+              ) : (
+                filteredPosts.map(post => (
+                  <div key={post.id} className="bg-white rounded-xl shadow-sm border border-slate-200 space-y-3 p-4">
+                    
+                    {/* Post Header */}
+                    <div className="flex justify-between items-center">
+                      <div className="flex space-x-3 items-center">
+                        <img src={post.avatar} className="w-10 h-10 rounded-full object-cover" alt={post.author} />
+                        <div>
+                          <h4 className="font-semibold text-sm hover:underline cursor-pointer">{post.author}</h4>
+                          <p className="text-xs text-slate-500 flex items-center space-x-1">
+                            <span>{post.time}</span>
+                            <span>•</span>
+                            <Globe className="w-3 h-3" />
+                          </p>
+                        </div>
+                      </div>
+                      <button className="text-slate-500 hover:bg-slate-100 p-2 rounded-full transition">
+                        <MoreHorizontal className="w-5 h-5" />
+                      </button>
+                    </div>
+
+                    {/* Post Content */}
+                    <p className="text-sm text-slate-800 leading-relaxed">{post.content}</p>
+
+                    {/* Post Media (If attached) */}
+                    {post.image && (
+                      <div className="-mx-4">
+                        <img src={post.image} className="w-full object-cover max-h-96" alt="Post attachment" />
+                      </div>
+                    )}
+
+                    {/* Post Stats */}
+                    <div className="flex justify-between text-xs text-slate-500 pt-1">
+                      <div className="flex items-center space-x-1.5">
+                        <span className="bg-blue-600 text-white rounded-full p-1">
+                          <ThumbsUp className="w-3 h-3" />
+                        </span>
+                        <span>{post.likes} Likes</span>
+                      </div>
+                      <div className="space-x-2">
+                        <span>{post.comments.length} Comments</span>
+                        <span>2 Shares</span>
+                      </div>
+                    </div>
+
+                    <hr className="border-slate-100" />
+
+                    {/* Action Buttons */}
+                    <div className="flex justify-between">
+                      <button
+                        onClick={() => handleToggleLike(post.id)}
+                        className={`flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg font-medium text-sm transition ${
+                          post.isLiked ? 'text-blue-600' : 'text-slate-600'
+                        }`}
+                      >
+                        <ThumbsUp className={`w-5 h-5 ${post.isLiked ? 'fill-blue-600' : ''}`} />
+                        <span>Like</span>
+                      </button>
+                      <button className="flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg text-slate-600 font-medium text-sm transition">
+                        <MessageSquare className="w-5 h-5" />
+                        <span>Comment</span>
+                      </button>
+                      <button className="flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg text-slate-600 font-medium text-sm transition">
+                        <Share2 className="w-5 h-5" />
+                        <span>Share</span>
+                      </button>
+                    </div>
+
+                    <hr className="border-slate-100" />
+
+                    {/* Comments List */}
+                    {post.comments.length > 0 && (
+                      <div className="space-y-2 pt-1">
+                        {post.comments.map(comment => (
+                          <div key={comment.id} className="flex space-x-2 items-start">
+                            <img src={comment.avatar} className="w-8 h-8 rounded-full object-cover" alt={comment.author} />
+                            <div className="bg-slate-100 px-3 py-2 rounded-2xl max-w-[85%] text-xs">
+                              <span className="font-semibold block text-slate-900">{comment.author}</span>
+                              <span className="text-slate-700">{comment.text}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Comment Input Box */}
+                    <div className="flex space-x-2 items-center pt-2">
+                      <img
+                        src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
+                        className="w-8 h-8 rounded-full object-cover"
+                        alt="User avatar"
+                      />
+                      <div className="flex-1 flex bg-slate-100 rounded-full px-3 py-1.5 items-center">
+                        <input
+                          type="text"
+                          placeholder="Write a comment..."
+                          value={commentInputs[post.id] || ''}
+                          onChange={(e) => setCommentInputs({ ...commentInputs, [post.id]: e.target.value })}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') handleAddComment(post.id);
+                          }}
+                          className="bg-transparent text-xs w-full outline-none"
+                        />
+                        <button 
+                          onClick={() => handleAddComment(post.id)}
+                          className="text-blue-600 hover:text-blue-700 p-1"
+                        >
+                          <Send className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                ))
+              )}
+
+            </div>
+          )}
+
+        </main>
+
+        {/* RIGHT SIDEBAR (Contacts & Ads) */}
+        <aside className="w-64 xl:w-72 p-3 overflow-y-auto hidden xl:block shrink-0 space-y-4">
+          
+          {/* Sponsored Ad Section */}
+          <div className="space-y-2">
+            <h3 className="font-semibold text-slate-500 text-xs uppercase">Sponsored</h3>
+            <a href="#ad" onClick={(e) => e.preventDefault()} className="flex space-x-3 items-center hover:bg-slate-200 p-2 rounded-lg transition">
+              <img
+                src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&q=80&w=150"
+                className="w-16 h-16 rounded-lg object-cover"
+                alt="Ad"
+              />
+              <div>
+                <h4 className="font-semibold text-sm">Design Masterclass 2026</h4>
+                <p className="text-xs text-slate-500">masterclass.com</p>
+              </div>
+            </a>
+          </div>
+
+          <hr className="border-slate-200" />
+
+          {/* Active Contacts */}
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <h3 className="font-semibold text-slate-500 text-xs uppercase">Contacts</h3>
+              <button className="text-slate-500 hover:bg-slate-200 p-1 rounded-full">
+                <Search className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-1">
+              {contacts.map(contact => (
+                <div
+                  key={contact.id}
+                  className="flex items-center space-x-3 p-2 hover:bg-slate-200 rounded-lg cursor-pointer transition"
+                >
+                  <div className="relative">
+                    <img src={contact.avatar} className="w-9 h-9 rounded-full object-cover" alt={contact.name} />
+                    {contact.online && (
+                      <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+                    )}
+                  </div>
+                  <span className="font-medium text-sm text-slate-800">{contact.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+
+      {/* CREATE POST MODAL */}
+      {isPostModalOpen && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-4 border-b border-slate-200">
+              <h3 className="font-bold text-center flex-1 text-slate-800 text-lg">Create Post</h3>
+              <button 
+                onClick={() => setIsPostModalOpen(false)}
+                className="bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition"
+              >
+                <X className="w-5 h-5 text-slate-600" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <form onSubmit={handleCreatePost} className="p-4 space-y-4">
+              <div className="flex space-x-3 items-center">
+                <img
+                  src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
+                  className="w-10 h-10 rounded-full object-cover"
+                  alt="Avatar"
+                />
+                <div>
+                  <h4 className="font-semibold text-sm">{user ? user.name : 'John Doe'}</h4>
+                  <span className="bg-slate-100 text-xs px-2 py-0.5 rounded text-slate-600 font-medium">Public</span>
+                </div>
+              </div>
+
+              <textarea
+                rows={4}
+                value={newPostText}
+                onChange={(e) => setNewPostText(e.target.value)}
+                placeholder={`What's on your mind, ${user ? user.name : 'John'}?`}
+                className="w-full text-sm outline-none resize-none"
+              ></textarea>
+
+              <div>
+                <input
+                  type="text"
+                  value={newPostImage}
+                  onChange={(e) => setNewPostImage(e.target.value)}
+                  placeholder="Paste Image URL (Optional)"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={!newPostText.trim() && !newPostImage.trim()}
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-semibold py-2 rounded-lg transition"
+              >
+                Post
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
