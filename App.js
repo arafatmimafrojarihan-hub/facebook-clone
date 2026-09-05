@@ -10,7 +10,6 @@ import {
   Bell,
   Bookmark,
   Clock,
-  ChevronDown,
   Video,
   Image,
   Smile,
@@ -23,11 +22,8 @@ import {
   LogOut,
   X,
   Send,
-  Play,
   Flame,
   Gamepad2,
-  Music,
-  Newspaper,
   Compass
 } from 'lucide-react';
 
@@ -311,17 +307,12 @@ export default function App() {
     return matchesSearch && matchesCategory;
   });
 
-  // ---------------------------------------------------------------------------
-  // VIEW 1: LANDING / LOGIN PAGE
-  // ---------------------------------------------------------------------------
+  // VIEW 1: LOGIN PAGE
   if (currentView === 'login') {
     return (
       <div className="bg-slate-100 font-sans text-slate-900 min-h-screen flex flex-col justify-between">
-        {/* Main Content Area */}
         <main className="flex-1 flex items-center justify-center px-4 py-8 lg:py-20">
           <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-            
-            {/* Left Column: Branding */}
             <div className="text-center lg:text-left space-y-3 lg:pr-6">
               <h1 className="text-blue-600 font-bold text-5xl lg:text-6xl tracking-tight">facebook</h1>
               <p className="text-2xl lg:text-3xl text-slate-700 font-normal leading-snug">
@@ -329,7 +320,6 @@ export default function App() {
               </p>
             </div>
 
-            {/* Right Column: Login Card */}
             <div className="flex flex-col items-center">
               <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg border border-slate-200 w-full max-w-[396px] space-y-4">
                 <form onSubmit={handleLogin} className="space-y-3">
@@ -389,11 +379,9 @@ export default function App() {
                 <a href="#page" onClick={(e) => e.preventDefault()} className="font-bold hover:underline text-slate-800">Create a Page</a> for a celebrity, brand or business.
               </p>
             </div>
-
           </div>
         </main>
 
-        {/* Footer */}
         <footer className="bg-white border-t border-slate-200 py-8 px-4 text-xs text-slate-500 shrink-0">
           <div className="max-w-5xl mx-auto space-y-3">
             <div className="flex flex-wrap gap-x-3 gap-y-1 text-slate-600">
@@ -401,11 +389,6 @@ export default function App() {
               <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">বাংলা</a>
               <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">অসমীয়া</a>
               <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">हिन्दी</a>
-              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">Nepali</a>
-              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">Bahasa Indonesia</a>
-              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">العربية</a>
-              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">Español</a>
-              <a href="#lang" onClick={(e) => e.preventDefault()} className="hover:underline">Português (Brasil)</a>
             </div>
 
             <hr className="border-slate-200" />
@@ -416,17 +399,6 @@ export default function App() {
               <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Messenger</a>
               <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Facebook Lite</a>
               <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Watch</a>
-              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Places</a>
-              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Games</a>
-              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Marketplace</a>
-              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Meta Pay</a>
-              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Meta Store</a>
-              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Meta Quest</a>
-              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Instagram</a>
-              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Fundraisers</a>
-              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Services</a>
-              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Privacy Policy</a>
-              <a href="#link" onClick={(e) => e.preventDefault()} className="hover:underline">Terms</a>
             </div>
 
             <div className="pt-2">
@@ -438,15 +410,12 @@ export default function App() {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // VIEW 2: MAIN APPLICATION FEED & WATCH SECTION
-  // ---------------------------------------------------------------------------
+  // VIEW 2: MAIN FEED & WATCH APP
   return (
     <div className="bg-slate-100 font-sans text-slate-900 antialiased h-screen flex flex-col overflow-hidden">
       
-      {/* TOP NAVIGATION BAR */}
+      {/* HEADER */}
       <header className="bg-white border-b border-slate-200 h-14 px-4 flex items-center justify-between shadow-sm shrink-0 z-40">
-        {/* Left: Logo & Search */}
         <div className="flex items-center space-x-2">
           <div 
             onClick={() => setActiveTab('home')}
@@ -466,7 +435,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* Center: Main Nav Tabs */}
         <div className="flex items-center space-x-1 md:space-x-2 h-full">
           <button 
             onClick={() => setActiveTab('home')}
@@ -506,7 +474,6 @@ export default function App() {
           </button>
         </div>
 
-        {/* Right: Profile & Actions */}
         <div className="flex items-center space-x-2 relative">
           <button className="bg-slate-200 hover:bg-slate-300 p-2.5 rounded-full transition hidden sm:flex">
             <Grid className="w-5 h-5 text-slate-700" />
@@ -520,7 +487,6 @@ export default function App() {
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center">5</span>
           </button>
 
-          {/* User Profile Avatar with Menu Toggle */}
           <div className="relative">
             <img
               src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
@@ -529,7 +495,6 @@ export default function App() {
               className="w-10 h-10 rounded-full cursor-pointer object-cover border border-slate-300 hover:opacity-90 transition"
             />
 
-            {/* Profile Dropdown Menu */}
             {isProfileMenuOpen && (
               <div className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-slate-200 p-2 space-y-1 z-50">
                 <div className="flex items-center space-x-3 p-2 hover:bg-slate-100 rounded-lg cursor-pointer">
@@ -561,7 +526,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* MAIN CONTAINER (3-Column Layout) */}
+      {/* BODY */}
       <div className="flex flex-1 overflow-hidden">
 
         {/* LEFT SIDEBAR */}
@@ -594,32 +559,14 @@ export default function App() {
             <Bookmark className="text-purple-500 w-6 h-6" />
             <span className="font-medium text-sm">Saved</span>
           </a>
-
-          <a href="#groups" onClick={(e) => e.preventDefault()} className="flex items-center space-x-3 p-2 hover:bg-slate-200 rounded-lg transition text-slate-700">
-            <Users className="text-blue-600 w-6 h-6" />
-            <span className="font-medium text-sm">Groups</span>
-          </a>
-
-          <hr className="border-slate-200 my-2" />
-
-          <h3 className="px-2 text-xs font-semibold text-slate-500">Your Shortcuts</h3>
-          
-          <a href="#shortcut1" onClick={(e) => e.preventDefault()} className="flex items-center space-x-3 p-2 hover:bg-slate-200 rounded-lg transition text-slate-700">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-400 to-red-500 flex items-center justify-center text-white font-bold text-xs">
-              DEV
-            </div>
-            <span className="font-medium text-sm">React Developers Group</span>
-          </a>
         </aside>
 
-        {/* CENTER FEED & VIDEO SECTION */}
+        {/* MAIN FEED / VIDEO SECTION */}
         <main className="flex-1 overflow-y-auto p-4 flex flex-col items-center">
           
-          {/* CONDITION 1: WATCH / VIDEO TAB VIEW */}
+          {/* WATCH / VIDEO VIEW */}
           {activeTab === 'watch' ? (
             <div className="w-full max-w-[680px] space-y-4">
-              
-              {/* Watch Header Banner & Categories */}
               <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-3">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center space-x-2">
@@ -632,7 +579,6 @@ export default function App() {
                   </span>
                 </div>
 
-                {/* Category Pills */}
                 <div className="flex items-center space-x-2 overflow-x-auto pb-1 text-xs">
                   <button 
                     onClick={() => setVideoCategory('all')}
@@ -664,7 +610,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* VIDEO CARDS LIST */}
               {filteredVideos.length === 0 ? (
                 <div className="bg-white rounded-xl shadow-sm p-8 text-center text-slate-500 border border-slate-200">
                   No videos found matching your filter.
@@ -672,8 +617,6 @@ export default function App() {
               ) : (
                 filteredVideos.map(video => (
                   <div key={video.id} className="bg-white rounded-xl shadow-sm border border-slate-200 space-y-3 p-4">
-                    
-                    {/* Video Creator Header */}
                     <div className="flex justify-between items-center">
                       <div className="flex space-x-3 items-center">
                         <img src={video.avatar} className="w-10 h-10 rounded-full object-cover" alt={video.creator} />
@@ -696,429 +639,293 @@ export default function App() {
                       </button>
                     </div>
 
-                    {/* Video Description & Title */}
-                    <div>
-                      <h3 className="font-bold text-base text-slate-900 mb-1">{video.title}</h3>
-                      <p className="text-sm text-slate-700 leading-relaxed">{video.description}</p>
+                    <div className="space-y-1">
+                      <h3 className="font-semibold text-base text-slate-800">{video.title}</h3>
+                      <p className="text-sm text-slate-600">{video.description}</p>
                     </div>
 
-                    {/* Embedded Youtube Player */}
-                    <div className="relative rounded-xl overflow-hidden aspect-video bg-black -mx-4 sm:mx-0 shadow-inner">
+                    {/* Video Embed */}
+                    <div className="relative aspect-video rounded-lg overflow-hidden bg-black">
                       <iframe
-                        className="w-full h-full border-0"
                         src={video.embedUrl}
                         title={video.title}
+                        className="w-full h-full border-0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                       ></iframe>
                     </div>
 
-                    {/* Video Stats */}
-                    <div className="flex justify-between text-xs text-slate-500 pt-1">
-                      <div className="flex items-center space-x-1.5">
-                        <span className="bg-blue-600 text-white rounded-full p-1">
-                          <ThumbsUp className="w-3 h-3" />
-                        </span>
-                        <span>{video.likes} Reactions</span>
-                      </div>
-                      <div className="space-x-2">
-                        <span>{video.comments.length} Comments</span>
-                      </div>
+                    <div className="flex items-center justify-between text-xs text-slate-500 pt-1">
+                      <span>👍 {video.likes} likes</span>
+                      <span>{video.comments.length} comments</span>
                     </div>
 
                     <hr className="border-slate-100" />
 
-                    {/* Video Interactive Actions */}
-                    <div className="flex justify-between">
-                      <button
+                    <div className="flex justify-around text-slate-600 text-sm font-medium">
+                      <button 
                         onClick={() => handleToggleVideoLike(video.id)}
-                        className={`flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg font-medium text-sm transition ${
-                          video.isLiked ? 'text-blue-600' : 'text-slate-600'
-                        }`}
+                        className={`flex items-center space-x-2 p-2 rounded-lg hover:bg-slate-100 flex-1 justify-center transition ${video.isLiked ? 'text-blue-600 font-bold' : ''}`}
                       >
-                        <ThumbsUp className={`w-5 h-5 ${video.isLiked ? 'fill-blue-600' : ''}`} />
+                        <ThumbsUp className="w-5 h-5" />
                         <span>Like</span>
                       </button>
-                      <button className="flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg text-slate-600 font-medium text-sm transition">
+                      <button className="flex items-center space-x-2 p-2 rounded-lg hover:bg-slate-100 flex-1 justify-center transition">
                         <MessageSquare className="w-5 h-5" />
                         <span>Comment</span>
                       </button>
-                      <button className="flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg text-slate-600 font-medium text-sm transition">
+                      <button className="flex items-center space-x-2 p-2 rounded-lg hover:bg-slate-100 flex-1 justify-center transition">
                         <Share2 className="w-5 h-5" />
                         <span>Share</span>
                       </button>
                     </div>
 
-                    <hr className="border-slate-100" />
-
-                    {/* Video Comments */}
-                    {video.comments.length > 0 && (
-                      <div className="space-y-2 pt-1">
-                        {video.comments.map(comment => (
-                          <div key={comment.id} className="flex space-x-2 items-start">
-                            <img src={comment.avatar} className="w-8 h-8 rounded-full object-cover" alt={comment.author} />
-                            <div className="bg-slate-100 px-3 py-2 rounded-2xl max-w-[85%] text-xs">
-                              <span className="font-semibold block text-slate-900">{comment.author}</span>
-                              <span className="text-slate-700">{comment.text}</span>
-                            </div>
+                    {/* Comments Section for Video */}
+                    <div className="pt-2 space-y-2 border-t border-slate-100">
+                      {video.comments.map(comment => (
+                        <div key={comment.id} className="flex space-x-2 text-xs">
+                          <img src={comment.avatar} className="w-7 h-7 rounded-full object-cover" alt={comment.author} />
+                          <div className="bg-slate-100 p-2.5 rounded-2xl flex-1">
+                            <span className="font-semibold block text-slate-800">{comment.author}</span>
+                            <span className="text-slate-700">{comment.text}</span>
                           </div>
-                        ))}
-                      </div>
-                    )}
+                        </div>
+                      ))}
 
-                    {/* Video Comment Input Box */}
-                    <div className="flex space-x-2 items-center pt-2">
-                      <img
-                        src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
-                        className="w-8 h-8 rounded-full object-cover"
-                        alt="User avatar"
-                      />
-                      <div className="flex-1 flex bg-slate-100 rounded-full px-3 py-1.5 items-center">
-                        <input
-                          type="text"
-                          placeholder="Write a comment on this video..."
-                          value={commentInputs[`video-${video.id}`] || ''}
-                          onChange={(e) => setCommentInputs({ ...commentInputs, [`video-${video.id}`]: e.target.value })}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter') handleAddVideoComment(video.id);
-                          }}
-                          className="bg-transparent text-xs w-full outline-none"
-                        />
-                        <button 
-                          onClick={() => handleAddVideoComment(video.id)}
-                          className="text-blue-600 hover:text-blue-700 p-1"
-                        >
-                          <Send className="w-4 h-4" />
-                        </button>
+                      <div className="flex space-x-2 pt-1">
+                        <img src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'} className="w-7 h-7 rounded-full object-cover" alt="User" />
+                        <div className="flex-1 flex bg-slate-100 rounded-full px-3 py-1">
+                          <input
+                            type="text"
+                            placeholder="Write a comment..."
+                            value={commentInputs[`video-${video.id}`] || ''}
+                            onChange={(e) => setCommentInputs({ ...commentInputs, [`video-${video.id}`]: e.target.value })}
+                            onKeyDown={(e) => e.key === 'Enter' && handleAddVideoComment(video.id)}
+                            className="bg-transparent text-xs w-full outline-none"
+                          />
+                          <button onClick={() => handleAddVideoComment(video.id)} className="text-blue-600 hover:text-blue-700">
+                            <Send className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </div>
                     </div>
 
                   </div>
                 ))
               )}
-
             </div>
           ) : (
-            /* CONDITION 2: STANDARD MAIN HOME FEED VIEW */
-            <div className="w-full max-w-[590px] space-y-4">
-
-              {/* STORIES BAR */}
-              <div className="flex space-x-2 overflow-x-auto pb-2 scrollbar-none w-full">
-                {/* Create Story Card */}
-                <div 
-                  onClick={() => setIsPostModalOpen(true)}
-                  className="w-28 h-48 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden shrink-0 relative flex flex-col cursor-pointer group"
-                >
-                  <img
-                    src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
-                    className="h-32 object-cover group-hover:scale-105 transition duration-200"
-                    alt="Story background"
-                  />
-                  <div className="bg-blue-600 text-white rounded-full p-1.5 border-2 border-white absolute bottom-10 left-1/2 -translate-x-1/2">
-                    <Plus className="w-4 h-4" />
+            /* HOME FEED VIEW */
+            <div className="w-full max-w-[680px] space-y-4">
+              
+              {/* Stories Bar */}
+              <div className="flex space-x-2 overflow-x-auto pb-2 scrollbar-none">
+                <div className="w-28 h-48 bg-white rounded-xl shadow-sm border border-slate-200 flex-shrink-0 relative overflow-hidden group cursor-pointer">
+                  <img src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'} className="h-32 w-full object-cover group-hover:scale-105 transition" alt="Create story" />
+                  <div className="absolute bottom-0 w-full bg-white p-2 text-center pt-4">
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 border-4 border-white text-white rounded-full p-1">
+                      <Plus className="w-4 h-4" />
+                    </div>
+                    <span className="text-xs font-semibold text-slate-800 block leading-tight">Create Story</span>
                   </div>
-                  <div className="mt-auto pb-2 text-center text-xs font-semibold text-slate-800">Create Story</div>
                 </div>
 
-                {/* User Story Cards */}
                 {stories.map(story => (
-                  <div 
-                    key={story.id} 
-                    className="w-28 h-48 rounded-xl shadow-sm overflow-hidden shrink-0 relative cursor-pointer group border border-slate-200"
-                  >
-                    <img
-                      src={story.image}
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-200"
-                      alt={story.name}
-                    />
-                    <div className="absolute inset-0 bg-black/20"></div>
-                    <img
-                      src={story.avatar}
-                      className="w-9 h-9 rounded-full border-2 border-blue-600 absolute top-2 left-2 object-cover"
-                      alt={story.name}
-                    />
-                    <span className="absolute bottom-2 left-2 text-white font-medium text-xs shadow-sm">
-                      {story.name}
-                    </span>
+                  <div key={story.id} className="w-28 h-48 rounded-xl shadow-sm flex-shrink-0 relative overflow-hidden group cursor-pointer">
+                    <img src={story.image} className="w-full h-full object-cover group-hover:scale-105 transition" alt={story.name} />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60"></div>
+                    <img src={story.avatar} className="absolute top-2 left-2 w-8 h-8 rounded-full border-2 border-blue-600 object-cover" alt={story.name} />
+                    <span className="absolute bottom-2 left-2 right-2 text-white font-medium text-xs leading-tight drop-shadow">{story.name}</span>
                   </div>
                 ))}
               </div>
 
-              {/* CREATE POST BOX */}
-              <div className="bg-white rounded-xl shadow-sm p-4 border border-slate-200 space-y-3">
-                <div className="flex space-x-3 items-center">
-                  <img
-                    src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
-                    className="w-10 h-10 rounded-full object-cover"
-                    alt="Avatar"
-                  />
-                  <input
-                    type="text"
+              {/* Create Post Input Card */}
+              <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-3 space-y-3">
+                <div className="flex items-center space-x-2">
+                  <img src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'} className="w-10 h-10 rounded-full object-cover" alt="User" />
+                  <button 
                     onClick={() => setIsPostModalOpen(true)}
-                    readOnly
-                    placeholder={`What's on your mind, ${user ? user.name : 'John'}?`}
-                    className="bg-slate-100 hover:bg-slate-200 transition rounded-full px-4 py-2.5 text-sm w-full outline-none cursor-pointer"
-                  />
+                    className="bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-full py-2.5 px-4 text-left w-full text-sm transition"
+                  >
+                    What's on your mind, {user?.name || 'John'}?
+                  </button>
                 </div>
-
                 <hr className="border-slate-100" />
-
-                <div className="flex justify-between pt-1">
-                  <button 
-                    onClick={() => setActiveTab('watch')}
-                    className="flex items-center space-x-2 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-sm font-medium transition flex-1 justify-center"
-                  >
+                <div className="flex justify-around text-xs font-medium text-slate-600">
+                  <button onClick={() => setIsPostModalOpen(true)} className="flex items-center space-x-2 p-2 hover:bg-slate-100 rounded-lg flex-1 justify-center transition">
                     <Video className="text-red-500 w-5 h-5" />
-                    <span className="hidden sm:inline">Watch Videos</span>
+                    <span>Live video</span>
                   </button>
-                  <button 
-                    onClick={() => setIsPostModalOpen(true)}
-                    className="flex items-center space-x-2 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-sm font-medium transition flex-1 justify-center"
-                  >
-                    <Image className="text-green-500 w-5 h-5" />
-                    <span>Photo/Video</span>
+                  <button onClick={() => setIsPostModalOpen(true)} className="flex items-center space-x-2 p-2 hover:bg-slate-100 rounded-lg flex-1 justify-center transition">
+                    <Image className="text-emerald-500 w-5 h-5" />
+                    <span>Photo/video</span>
                   </button>
-                  <button 
-                    onClick={() => setIsPostModalOpen(true)}
-                    className="flex items-center space-x-2 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-sm font-medium transition flex-1 justify-center"
-                  >
-                    <Smile className="text-yellow-500 w-5 h-5" />
-                    <span className="hidden sm:inline">Feeling/Activity</span>
+                  <button onClick={() => setIsPostModalOpen(true)} className="flex items-center space-x-2 p-2 hover:bg-slate-100 rounded-lg flex-1 justify-center transition">
+                    <Smile className="text-amber-500 w-5 h-5" />
+                    <span>Feeling/activity</span>
                   </button>
                 </div>
               </div>
 
-              {/* POSTS LIST */}
-              {filteredPosts.length === 0 ? (
-                <div className="bg-white rounded-xl shadow-sm p-8 text-center text-slate-500 border border-slate-200">
-                  No posts found matching your search.
-                </div>
-              ) : (
-                filteredPosts.map(post => (
-                  <div key={post.id} className="bg-white rounded-xl shadow-sm border border-slate-200 space-y-3 p-4">
-                    
-                    {/* Post Header */}
-                    <div className="flex justify-between items-center">
-                      <div className="flex space-x-3 items-center">
-                        <img src={post.avatar} className="w-10 h-10 rounded-full object-cover" alt={post.author} />
-                        <div>
-                          <h4 className="font-semibold text-sm hover:underline cursor-pointer">{post.author}</h4>
-                          <p className="text-xs text-slate-500 flex items-center space-x-1">
-                            <span>{post.time}</span>
-                            <span>•</span>
-                            <Globe className="w-3 h-3" />
-                          </p>
+              {/* Posts Feed */}
+              {filteredPosts.map(post => (
+                <div key={post.id} className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <div className="flex space-x-3 items-center">
+                      <img src={post.avatar} className="w-10 h-10 rounded-full object-cover" alt={post.author} />
+                      <div>
+                        <h4 className="font-semibold text-sm hover:underline cursor-pointer">{post.author}</h4>
+                        <p className="text-xs text-slate-500 flex items-center space-x-1">
+                          <span>{post.time}</span>
+                          <span>•</span>
+                          <Globe className="w-3 h-3" />
+                        </p>
+                      </div>
+                    </div>
+                    <button className="text-slate-500 hover:bg-slate-100 p-2 rounded-full transition">
+                      <MoreHorizontal className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <p className="text-sm text-slate-800 leading-normal">{post.content}</p>
+
+                  {post.image && (
+                    <div className="rounded-lg overflow-hidden border border-slate-100">
+                      <img src={post.image} className="w-full object-cover max-h-96" alt="Post attachment" />
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-between text-xs text-slate-500 pt-1">
+                    <span>👍 {post.likes} likes</span>
+                    <span>{post.comments.length} comments</span>
+                  </div>
+
+                  <hr className="border-slate-100" />
+
+                  <div className="flex justify-around text-slate-600 text-sm font-medium">
+                    <button 
+                      onClick={() => handleToggleLike(post.id)}
+                      className={`flex items-center space-x-2 p-2 rounded-lg hover:bg-slate-100 flex-1 justify-center transition ${post.isLiked ? 'text-blue-600 font-bold' : ''}`}
+                    >
+                      <ThumbsUp className="w-5 h-5" />
+                      <span>Like</span>
+                    </button>
+                    <button className="flex items-center space-x-2 p-2 rounded-lg hover:bg-slate-100 flex-1 justify-center transition">
+                      <MessageSquare className="w-5 h-5" />
+                      <span>Comment</span>
+                    </button>
+                    <button className="flex items-center space-x-2 p-2 rounded-lg hover:bg-slate-100 flex-1 justify-center transition">
+                      <Share2 className="w-5 h-5" />
+                      <span>Share</span>
+                    </button>
+                  </div>
+
+                  {/* Comments Section */}
+                  <div className="pt-2 space-y-2 border-t border-slate-100">
+                    {post.comments.map(comment => (
+                      <div key={comment.id} className="flex space-x-2 text-xs">
+                        <img src={comment.avatar} className="w-7 h-7 rounded-full object-cover" alt={comment.author} />
+                        <div className="bg-slate-100 p-2.5 rounded-2xl flex-1">
+                          <span className="font-semibold block text-slate-800">{comment.author}</span>
+                          <span className="text-slate-700">{comment.text}</span>
                         </div>
                       </div>
-                      <button className="text-slate-500 hover:bg-slate-100 p-2 rounded-full transition">
-                        <MoreHorizontal className="w-5 h-5" />
-                      </button>
-                    </div>
+                    ))}
 
-                    {/* Post Content */}
-                    <p className="text-sm text-slate-800 leading-relaxed">{post.content}</p>
-
-                    {/* Post Media (If attached) */}
-                    {post.image && (
-                      <div className="-mx-4">
-                        <img src={post.image} className="w-full object-cover max-h-96" alt="Post attachment" />
-                      </div>
-                    )}
-
-                    {/* Post Stats */}
-                    <div className="flex justify-between text-xs text-slate-500 pt-1">
-                      <div className="flex items-center space-x-1.5">
-                        <span className="bg-blue-600 text-white rounded-full p-1">
-                          <ThumbsUp className="w-3 h-3" />
-                        </span>
-                        <span>{post.likes} Likes</span>
-                      </div>
-                      <div className="space-x-2">
-                        <span>{post.comments.length} Comments</span>
-                        <span>2 Shares</span>
-                      </div>
-                    </div>
-
-                    <hr className="border-slate-100" />
-
-                    {/* Action Buttons */}
-                    <div className="flex justify-between">
-                      <button
-                        onClick={() => handleToggleLike(post.id)}
-                        className={`flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg font-medium text-sm transition ${
-                          post.isLiked ? 'text-blue-600' : 'text-slate-600'
-                        }`}
-                      >
-                        <ThumbsUp className={`w-5 h-5 ${post.isLiked ? 'fill-blue-600' : ''}`} />
-                        <span>Like</span>
-                      </button>
-                      <button className="flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg text-slate-600 font-medium text-sm transition">
-                        <MessageSquare className="w-5 h-5" />
-                        <span>Comment</span>
-                      </button>
-                      <button className="flex items-center justify-center space-x-2 w-full hover:bg-slate-100 py-1.5 rounded-lg text-slate-600 font-medium text-sm transition">
-                        <Share2 className="w-5 h-5" />
-                        <span>Share</span>
-                      </button>
-                    </div>
-
-                    <hr className="border-slate-100" />
-
-                    {/* Comments List */}
-                    {post.comments.length > 0 && (
-                      <div className="space-y-2 pt-1">
-                        {post.comments.map(comment => (
-                          <div key={comment.id} className="flex space-x-2 items-start">
-                            <img src={comment.avatar} className="w-8 h-8 rounded-full object-cover" alt={comment.author} />
-                            <div className="bg-slate-100 px-3 py-2 rounded-2xl max-w-[85%] text-xs">
-                              <span className="font-semibold block text-slate-900">{comment.author}</span>
-                              <span className="text-slate-700">{comment.text}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Comment Input Box */}
-                    <div className="flex space-x-2 items-center pt-2">
-                      <img
-                        src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
-                        className="w-8 h-8 rounded-full object-cover"
-                        alt="User avatar"
-                      />
-                      <div className="flex-1 flex bg-slate-100 rounded-full px-3 py-1.5 items-center">
+                    <div className="flex space-x-2 pt-1">
+                      <img src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'} className="w-7 h-7 rounded-full object-cover" alt="User" />
+                      <div className="flex-1 flex bg-slate-100 rounded-full px-3 py-1">
                         <input
                           type="text"
                           placeholder="Write a comment..."
                           value={commentInputs[post.id] || ''}
                           onChange={(e) => setCommentInputs({ ...commentInputs, [post.id]: e.target.value })}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter') handleAddComment(post.id);
-                          }}
+                          onKeyDown={(e) => e.key === 'Enter' && handleAddComment(post.id)}
                           className="bg-transparent text-xs w-full outline-none"
                         />
-                        <button 
-                          onClick={() => handleAddComment(post.id)}
-                          className="text-blue-600 hover:text-blue-700 p-1"
-                        >
-                          <Send className="w-4 h-4" />
+                        <button onClick={() => handleAddComment(post.id)} className="text-blue-600 hover:text-blue-700">
+                          <Send className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </div>
-
                   </div>
-                ))
-              )}
 
-            </div>
-          )}
-
-        </main>
-
-        {/* RIGHT SIDEBAR (Contacts & Ads) */}
-        <aside className="w-64 xl:w-72 p-3 overflow-y-auto hidden xl:block shrink-0 space-y-4">
-          
-          {/* Sponsored Ad Section */}
-          <div className="space-y-2">
-            <h3 className="font-semibold text-slate-500 text-xs uppercase">Sponsored</h3>
-            <a href="#ad" onClick={(e) => e.preventDefault()} className="flex space-x-3 items-center hover:bg-slate-200 p-2 rounded-lg transition">
-              <img
-                src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&q=80&w=150"
-                className="w-16 h-16 rounded-lg object-cover"
-                alt="Ad"
-              />
-              <div>
-                <h4 className="font-semibold text-sm">Design Masterclass 2026</h4>
-                <p className="text-xs text-slate-500">masterclass.com</p>
-              </div>
-            </a>
-          </div>
-
-          <hr className="border-slate-200" />
-
-          {/* Active Contacts */}
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <h3 className="font-semibold text-slate-500 text-xs uppercase">Contacts</h3>
-              <button className="text-slate-500 hover:bg-slate-200 p-1 rounded-full">
-                <Search className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="space-y-1">
-              {contacts.map(contact => (
-                <div
-                  key={contact.id}
-                  className="flex items-center space-x-3 p-2 hover:bg-slate-200 rounded-lg cursor-pointer transition"
-                >
-                  <div className="relative">
-                    <img src={contact.avatar} className="w-9 h-9 rounded-full object-cover" alt={contact.name} />
-                    {contact.online && (
-                      <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
-                    )}
-                  </div>
-                  <span className="font-medium text-sm text-slate-800">{contact.name}</span>
                 </div>
               ))}
             </div>
+          )}
+        </main>
+
+        {/* RIGHT SIDEBAR - CONTACTS */}
+        <aside className="w-64 xl:w-72 p-3 overflow-y-auto hidden xl:block shrink-0 space-y-2">
+          <div className="flex justify-between items-center text-slate-500 mb-2">
+            <h3 className="font-semibold text-sm">Contacts</h3>
+            <div className="flex space-x-2">
+              <Search className="w-4 h-4 cursor-pointer hover:text-slate-700" />
+              <MoreHorizontal className="w-4 h-4 cursor-pointer hover:text-slate-700" />
+            </div>
           </div>
 
+          {contacts.map(contact => (
+            <div key={contact.id} className="flex items-center space-x-3 p-2 hover:bg-slate-200 rounded-lg cursor-pointer transition">
+              <div className="relative">
+                <img src={contact.avatar} className="w-9 h-9 rounded-full object-cover" alt={contact.name} />
+                {contact.online && (
+                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></span>
+                )}
+              </div>
+              <span className="font-medium text-sm text-slate-800">{contact.name}</span>
+            </div>
+          ))}
         </aside>
 
       </div>
 
       {/* CREATE POST MODAL */}
       {isPostModalOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200">
-            {/* Modal Header */}
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-lg w-full shadow-2xl overflow-hidden border border-slate-200 animate-in fade-in zoom-in duration-150">
             <div className="flex justify-between items-center p-4 border-b border-slate-200">
-              <h3 className="font-bold text-center flex-1 text-slate-800 text-lg">Create Post</h3>
+              <h3 className="font-bold text-lg text-slate-800 mx-auto">Create Post</h3>
               <button 
                 onClick={() => setIsPostModalOpen(false)}
-                className="bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition"
+                className="bg-slate-100 hover:bg-slate-200 p-1.5 rounded-full text-slate-600 transition absolute right-4"
               >
-                <X className="w-5 h-5 text-slate-600" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Modal Body */}
             <form onSubmit={handleCreatePost} className="p-4 space-y-4">
-              <div className="flex space-x-3 items-center">
-                <img
-                  src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'}
-                  className="w-10 h-10 rounded-full object-cover"
-                  alt="Avatar"
-                />
+              <div className="flex items-center space-x-3">
+                <img src={user?.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'} className="w-10 h-10 rounded-full object-cover" alt="User" />
                 <div>
-                  <h4 className="font-semibold text-sm">{user ? user.name : 'John Doe'}</h4>
-                  <span className="bg-slate-100 text-xs px-2 py-0.5 rounded text-slate-600 font-medium">Public</span>
+                  <h4 className="font-semibold text-sm">{user?.name || 'John Doe'}</h4>
+                  <span className="bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded flex items-center gap-1 w-max">
+                    <Globe className="w-3 h-3" /> Public
+                  </span>
                 </div>
               </div>
 
               <textarea
-                rows={4}
                 value={newPostText}
                 onChange={(e) => setNewPostText(e.target.value)}
-                placeholder={`What's on your mind, ${user ? user.name : 'John'}?`}
-                className="w-full text-sm outline-none resize-none"
-              ></textarea>
+                placeholder={`What's on your mind, ${user?.name || 'John'}?`}
+                className="w-full text-base border-none outline-none resize-none min-h-[100px]"
+              />
 
-              <div>
-                <input
-                  type="text"
-                  value={newPostImage}
-                  onChange={(e) => setNewPostImage(e.target.value)}
-                  placeholder="Paste Image URL (Optional)"
-                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-blue-500"
-                />
-              </div>
+              <input
+                type="url"
+                value={newPostImage}
+                onChange={(e) => setNewPostImage(e.target.value)}
+                placeholder="Optional image URL (e.g. https://images.unsplash.com/...)"
+                className="w-full text-xs p-2 border border-slate-200 rounded-lg outline-none focus:border-blue-500"
+              />
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={!newPostText.trim() && !newPostImage.trim()}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-semibold py-2 rounded-lg transition"
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white font-bold py-2.5 rounded-lg transition"
               >
                 Post
               </button>
@@ -1129,3 +936,4 @@ export default function App() {
 
     </div>
   );
+}
